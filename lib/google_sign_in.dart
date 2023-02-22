@@ -51,16 +51,15 @@ class GoogleSignInAccount implements GoogleIdentity {
         _idToken = data.idToken {
     assert(id != null);
   }
-    
+
   GoogleSignInAccount.fromSketchySketchy({
-    required this._googleSignIn,
     required this.displayName,
     required this.email,
     required this.id,
     required this.photoUrl,
     required this.serverAuthCode,
-    required this._idToken,
-  });
+  })  : _googleSignIn = GoogleSignIn(),
+        _idToken = null;
 
   // These error codes must match with ones declared on Android and iOS sides.
 
