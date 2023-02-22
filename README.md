@@ -1,64 +1,151 @@
-# Flutter plugins
+[![pub package](https://img.shields.io/pub/v/google_sign_in.svg)](https://pub.dev/packages/google_sign_in)
 
-| **ARCHIVED** |
-|--------------|
-| This repository is no longer in use; all source has moved to [flutter/packages](https://github.com/flutter/packages) and future development work will be done there. |
+A Flutter plugin for [Google Sign In](https://developers.google.com/identity/).
 
-## ARCHIVED CONTENT
+_Note_: This plugin is still under development, and some APIs might not be
+available yet. [Feedback](https://github.com/flutter/flutter/issues) and
+[Pull Requests](https://github.com/flutter/plugins/pulls) are most welcome!
 
-This repo is a companion repo to the main [flutter
-repo](https://github.com/flutter/flutter). It contains the source code for
-Flutter first-party plugins (i.e., plugins developed by the core Flutter team).
-Check the `packages` directory for all plugins.
+|             | Android | iOS    | Web |
+|-------------|---------|--------|-----|
+| **Support** | SDK 16+ | iOS 9+ | Any |
 
-Flutter plugins enable access to platform-specific APIs. For more information
-about plugins, and how to use them, see
-[https://flutter.dev/platform-plugins/](https://flutter.dev/platform-plugins/).
+## Platform integration
 
-These plugins are also available on
-[pub](https://pub.dev/flutter/packages).
+### Android integration
 
-## Issues
+To access Google Sign-In, you'll need to make sure to
+[register your application](https://firebase.google.com/docs/android/setup).
 
-Please file any issues, bugs, or feature requests in the [main flutter
-repo](https://github.com/flutter/flutter/issues/new).
+You don't need to include the google-services.json file in your app unless you
+are using Google services that require it. You do need to enable the OAuth APIs
+that you want, using the
+[Google Cloud Platform API manager](https://console.developers.google.com/). For
+example, if you want to mimic the behavior of the Google Sign-In sample app,
+you'll need to enable the
+[Google People API](https://developers.google.com/people/).
 
-Issues pertaining to this repository are [labeled
-"plugin"](https://github.com/flutter/flutter/issues?q=is%3Aopen+is%3Aissue+label%3Aplugin).
+Make sure you've filled out all required fields in the console for
+[OAuth consent screen](https://console.developers.google.com/apis/credentials/consent).
+Otherwise, you may encounter `APIException` errors.
 
-## Contributing
+### iOS integration
 
-If you wish to contribute a new plugin to the Flutter ecosystem, please
-see the documentation for [developing packages](https://flutter.dev/developing-packages/) and
-[platform channels](https://flutter.dev/platform-channels/). You can store
-your plugin source code in any GitHub repository (the present repo is only
-intended for plugins developed by the core Flutter team). Once your plugin
-is ready, you can [publish](https://flutter.dev/developing-packages/#publish) it
-to the [pub repository](https://pub.dev/).
+This plugin requires iOS 9.0 or higher.
 
-If you wish to contribute a change to any of the existing plugins in this repo,
-please review our [contribution guide](https://github.com/flutter/plugins/blob/main/CONTRIBUTING.md),
-and send a [pull request](https://github.com/flutter/plugins/pulls).
+1. [First register your application](https://firebase.google.com/docs/ios/setup).
+2. Make sure the file you download in step 1 is named
+   `GoogleService-Info.plist`.
+3. Move or copy `GoogleService-Info.plist` into the `[my_project]/ios/Runner`
+   directory.
+4. Open Xcode, then right-click on `Runner` directory and select
+   `Add Files to "Runner"`.
+5. Select `GoogleService-Info.plist` from the file manager.
+6. A dialog will show up and ask you to select the targets, select the `Runner`
+   target.
+7. If you need to authenticate to a backend server you can add a 
+   `SERVER_CLIENT_ID` key value pair in your `GoogleService-Info.plist`.
+   ```xml
+   <key>SERVER_CLIENT_ID</key>
+   <string>[YOUR SERVER CLIENT ID]</string>
+   ```
+8. Then add the `CFBundleURLTypes` attributes below into the
+   `[my_project]/ios/Runner/Info.plist` file.
 
-## Plugins
-These are the available plugins in this repository.
+```xml
+<!-- Put me in the [my_project]/ios/Runner/Info.plist file -->
+<!-- Google Sign-in Section -->
+<key>CFBundleURLTypes</key>
+<array>
+	<dict>
+		<key>CFBundleTypeRole</key>
+		<string>Editor</string>
+		<key>CFBundleURLSchemes</key>
+		<array>
+			<!-- TODO Replace this value: -->
+			<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
+			<string>com.googleusercontent.apps.861823949799-vc35cprkp249096uujjn0vvnmcvjppkn</string>
+		</array>
+	</dict>
+</array>
+<!-- End of the Google Sign-in Section -->
+```
 
-| Plugin | Pub | Points | Popularity | Likes | Issues | Pull requests |
-|--------|-----|--------|------------|-------|--------|---------------|
-| [camera](./packages/camera/) | [![pub package](https://img.shields.io/pub/v/camera.svg)](https://pub.dev/packages/camera) | [![pub points](https://img.shields.io/pub/points/camera)](https://pub.dev/packages/camera/score) | [![popularity](https://img.shields.io/pub/popularity/camera)](https://pub.dev/packages/camera/score) | [![likes](https://img.shields.io/pub/likes/camera)](https://pub.dev/packages/camera/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20camera?label=)](https://github.com/flutter/flutter/labels/p%3A%20camera) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20camera?label=)](https://github.com/flutter/plugins/labels/p%3A%20camera) |
-| [espresso](./packages/espresso/) | [![pub package](https://img.shields.io/pub/v/espresso.svg)](https://pub.dev/packages/espresso) | [![pub points](https://img.shields.io/pub/points/espresso)](https://pub.dev/packages/espresso/score) | [![popularity](https://img.shields.io/pub/popularity/espresso)](https://pub.dev/packages/espresso/score) | [![likes](https://img.shields.io/pub/likes/espresso)](https://pub.dev/packages/espresso/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20espresso?label=)](https://github.com/flutter/flutter/labels/p%3A%20espresso) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20espresso?label=)](https://github.com/flutter/plugins/labels/p%3A%20espresso) |
-| [file_selector](./packages/file_selector/) | [![pub package](https://img.shields.io/pub/v/file_selector.svg)](https://pub.dev/packages/file_selector) | [![pub points](https://img.shields.io/pub/points/file_selector)](https://pub.dev/packages/file_selector/score) | [![popularity](https://img.shields.io/pub/popularity/file_selector)](https://pub.dev/packages/file_selector/score) | [![likes](https://img.shields.io/pub/likes/file_selector)](https://pub.dev/packages/file_selector/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20file_selector?label=)](https://github.com/flutter/flutter/labels/p%3A%20file_selector) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20file_selector?label=)](https://github.com/flutter/plugins/labels/p%3A%20file_selector) |
-| [flutter_plugin_android_lifecycle](./packages/flutter_plugin_android_lifecycle/) | [![pub package](https://img.shields.io/pub/v/flutter_plugin_android_lifecycle.svg)](https://pub.dev/packages/flutter_plugin_android_lifecycle) | [![pub points](https://img.shields.io/pub/points/flutter_plugin_android_lifecycle)](https://pub.dev/packages/flutter_plugin_android_lifecycle/score) | [![popularity](https://img.shields.io/pub/popularity/flutter_plugin_android_lifecycle)](https://pub.dev/packages/flutter_plugin_android_lifecycle/score) | [![likes](https://img.shields.io/pub/likes/flutter_plugin_android_lifecycle)](https://pub.dev/packages/flutter_plugin_android_lifecycle/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20flutter_plugin_android_lifecycle?label=)](https://github.com/flutter/flutter/labels/p%3A%20flutter_plugin_android_lifecycle) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20flutter_plugin_android_lifecycle?label=)](https://github.com/flutter/plugins/labels/p%3A%20flutter_plugin_android_lifecycle) |
-| [google_maps_flutter](./packages/google_maps_flutter) | [![pub package](https://img.shields.io/pub/v/google_maps_flutter.svg)](https://pub.dev/packages/google_maps_flutter) | [![pub points](https://img.shields.io/pub/points/google_maps_flutter)](https://pub.dev/packages/google_maps_flutter/score) | [![popularity](https://img.shields.io/pub/popularity/google_maps_flutter)](https://pub.dev/packages/google_maps_flutter/score) | [![likes](https://img.shields.io/pub/likes/google_maps_flutter)](https://pub.dev/packages/google_maps_flutter/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20maps?label=)](https://github.com/flutter/flutter/labels/p%3A%20maps) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20google_maps_flutter?label=)](https://github.com/flutter/plugins/labels/p%3A%20google_maps_flutter) |
-| [google_sign_in](./packages/google_sign_in/) | [![pub package](https://img.shields.io/pub/v/google_sign_in.svg)](https://pub.dev/packages/google_sign_in) | [![pub points](https://img.shields.io/pub/points/google_sign_in)](https://pub.dev/packages/google_sign_in/score) | [![popularity](https://img.shields.io/pub/popularity/google_sign_in)](https://pub.dev/packages/google_sign_in/score) | [![likes](https://img.shields.io/pub/likes/google_sign_in)](https://pub.dev/packages/google_sign_in/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20google_sign_in?label=)](https://github.com/flutter/flutter/labels/p%3A%20google_sign_in) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20google_sign_in?label=)](https://github.com/flutter/plugins/labels/p%3A%20google_sign_in) |
-| [image_picker](./packages/image_picker/) | [![pub package](https://img.shields.io/pub/v/image_picker.svg)](https://pub.dev/packages/image_picker) | [![pub points](https://img.shields.io/pub/points/image_picker)](https://pub.dev/packages/image_picker/score) | [![popularity](https://img.shields.io/pub/popularity/image_picker)](https://pub.dev/packages/image_picker/score) | [![likes](https://img.shields.io/pub/likes/image_picker)](https://pub.dev/packages/image_picker/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20image_picker?label=)](https://github.com/flutter/flutter/labels/p%3A%20image_picker) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20image_picker?label=)](https://github.com/flutter/plugins/labels/p%3A%20image_picker) |
-| [in_app_purchase](./packages/in_app_purchase/) | [![pub package](https://img.shields.io/pub/v/in_app_purchase.svg)](https://pub.dev/packages/in_app_purchase) | [![pub points](https://img.shields.io/pub/points/in_app_purchase)](https://pub.dev/packages/in_app_purchase/score) | [![popularity](https://img.shields.io/pub/popularity/in_app_purchase)](https://pub.dev/packages/in_app_purchase/score) | [![likes](https://img.shields.io/pub/likes/in_app_purchase)](https://pub.dev/packages/in_app_purchase/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20in_app_purchase?label=)](https://github.com/flutter/flutter/labels/p%3A%20in_app_purchase) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20in_app_purchase?label=)](https://github.com/flutter/plugins/labels/p%3A%20in_app_purchase) |
-| [ios_platform_images](./packages/ios_platform_images/) | [![pub package](https://img.shields.io/pub/v/ios_platform_images.svg)](https://pub.dev/packages/ios_platform_images) | [![pub points](https://img.shields.io/pub/points/ios_platform_images)](https://pub.dev/packages/ios_platform_images/score) | [![popularity](https://img.shields.io/pub/popularity/ios_platform_images)](https://pub.dev/packages/ios_platform_images/score) | [![likes](https://img.shields.io/pub/likes/ios_platform_images)](https://pub.dev/packages/ios_platform_images/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20ios_platform_images?label=)](https://github.com/flutter/flutter/labels/p%3A%20ios_platform_images) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20ios_platform_images?label=)](https://github.com/flutter/plugins/labels/p%3A%20ios_platform_images) |
-| [local_auth](./packages/local_auth/) | [![pub package](https://img.shields.io/pub/v/local_auth.svg)](https://pub.dev/packages/local_auth) | [![pub points](https://img.shields.io/pub/points/local_auth)](https://pub.dev/packages/local_auth/score) | [![popularity](https://img.shields.io/pub/popularity/local_auth)](https://pub.dev/packages/local_auth/score) | [![likes](https://img.shields.io/pub/likes/local_auth)](https://pub.dev/packages/local_auth/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20local_auth?label=)](https://github.com/flutter/flutter/labels/p%3A%20local_auth) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20local_auth?label=)](https://github.com/flutter/plugins/labels/p%3A%20local_auth) |
-| [path_provider](./packages/path_provider/) | [![pub package](https://img.shields.io/pub/v/path_provider.svg)](https://pub.dev/packages/path_provider) | [![pub points](https://img.shields.io/pub/points/path_provider)](https://pub.dev/packages/path_provider/score) | [![popularity](https://img.shields.io/pub/popularity/path_provider)](https://pub.dev/packages/path_provider/score) | [![likes](https://img.shields.io/pub/likes/path_provider)](https://pub.dev/packages/path_provider/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20path_provider?label=)](https://github.com/flutter/flutter/labels/p%3A%20path_provider) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20path_provider?label=)](https://github.com/flutter/plugins/labels/p%3A%20path_provider) |
-| [plugin_platform_interface](./packages/plugin_platform_interface/) | [![pub package](https://img.shields.io/pub/v/plugin_platform_interface.svg)](https://pub.dev/packages/plugin_platform_interface) | [![pub points](https://img.shields.io/pub/points/plugin_platform_interface)](https://pub.dev/packages/plugin_platform_interface/score) | [![popularity](https://img.shields.io/pub/popularity/plugin_platform_interface)](https://pub.dev/packages/plugin_platform_interface/score) | [![likes](https://img.shields.io/pub/likes/plugin_platform_interface)](https://pub.dev/packages/plugin_platform_interface/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20plugin_platform_interface?label=)](https://github.com/flutter/flutter/labels/p%3A%20plugin_platform_interface) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20plugin_platform_interface?label=)](https://github.com/flutter/plugins/labels/p%3A%20plugin_platform_interface) |
-| [quick_actions](./packages/quick_actions/) | [![pub package](https://img.shields.io/pub/v/quick_actions.svg)](https://pub.dev/packages/quick_actions) | [![pub points](https://img.shields.io/pub/points/quick_actions)](https://pub.dev/packages/quick_actions/score) | [![popularity](https://img.shields.io/pub/popularity/quick_actions)](https://pub.dev/packages/quick_actions/score) | [![likes](https://img.shields.io/pub/likes/quick_actions)](https://pub.dev/packages/quick_actions/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20quick_actions?label=)](https://github.com/flutter/flutter/labels/p%3A%20quick_actions) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20quick_actions?label=)](https://github.com/flutter/plugins/labels/p%3A%20quick_actions) |
-| [shared_preferences](./packages/shared_preferences/) | [![pub package](https://img.shields.io/pub/v/shared_preferences.svg)](https://pub.dev/packages/shared_preferences) | [![pub points](https://img.shields.io/pub/points/shared_preferences)](https://pub.dev/packages/shared_preferences/score) | [![popularity](https://img.shields.io/pub/popularity/shared_preferences)](https://pub.dev/packages/shared_preferences/score) | [![likes](https://img.shields.io/pub/likes/shared_preferences)](https://pub.dev/packages/shared_preferences/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20shared_preferences?label=)](https://github.com/flutter/flutter/labels/p%3A%20shared_preferences) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20shared_preferences?label=)](https://github.com/flutter/plugins/labels/p%3A%20shared_preferences) |
-| [url_launcher](./packages/url_launcher/) | [![pub package](https://img.shields.io/pub/v/url_launcher.svg)](https://pub.dev/packages/url_launcher) | [![pub points](https://img.shields.io/pub/points/url_launcher)](https://pub.dev/packages/url_launcher/score) | [![popularity](https://img.shields.io/pub/popularity/url_launcher)](https://pub.dev/packages/url_launcher/score) | [![likes](https://img.shields.io/pub/likes/url_launcher)](https://pub.dev/packages/url_launcher/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20url_launcher?label=)](https://github.com/flutter/flutter/labels/p%3A%20url_launcher) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20url_launcher?label=)](https://github.com/flutter/plugins/labels/p%3A%20url_launcher) |
-| [video_player](./packages/video_player/) | [![pub package](https://img.shields.io/pub/v/video_player.svg)](https://pub.dev/packages/video_player) | [![pub points](https://img.shields.io/pub/points/video_player)](https://pub.dev/packages/video_player/score) | [![popularity](https://img.shields.io/pub/popularity/video_player)](https://pub.dev/packages/video_player/score) | [![likes](https://img.shields.io/pub/likes/video_player)](https://pub.dev/packages/video_player/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20video_player?label=)](https://github.com/flutter/flutter/labels/p%3A%20video_player) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20video_player?label=)](https://github.com/flutter/plugins/labels/p%3A%20video_player) |
-| [webview_flutter](./packages/webview_flutter/) | [![pub package](https://img.shields.io/pub/v/webview_flutter.svg)](https://pub.dev/packages/webview_flutter) | [![pub points](https://img.shields.io/pub/points/webview_flutter)](https://pub.dev/packages/webview_flutter/score) | [![popularity](https://img.shields.io/pub/popularity/webview_flutter)](https://pub.dev/packages/webview_flutter/score) | [![likes](https://img.shields.io/pub/likes/webview_flutter)](https://pub.dev/packages/webview_flutter/score) | [![GitHub issues by-label](https://img.shields.io/github/issues/flutter/flutter/p:%20webview?label=)](https://github.com/flutter/flutter/labels/p%3A%20webview) | [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/flutter/plugins/p:%20webview_flutter?label=)](https://github.com/flutter/plugins/labels/p%3A%20webview_flutter) |
+As an alternative to adding `GoogleService-Info.plist` to your Xcode project, 
+you can instead configure your app in Dart code. In this case, skip steps 3 to 7
+ and pass `clientId` and `serverClientId` to the `GoogleSignIn` constructor:
+
+```dart
+GoogleSignIn _googleSignIn = GoogleSignIn(
+  ...
+  // The OAuth client id of your app. This is required.
+  clientId: ...,
+  // If you need to authenticate to a backend server, specify its OAuth client. This is optional.
+  serverClientId: ...,
+);
+```
+
+Note that step 8 is still required.
+
+#### iOS additional requirement
+
+Note that according to
+https://developer.apple.com/sign-in-with-apple/get-started, starting June 30,
+2020, apps that use login services must also offer a "Sign in with Apple" option
+when submitting to the Apple App Store.
+
+Consider also using an Apple sign in plugin from pub.dev.
+
+The Flutter Favorite
+[sign_in_with_apple](https://pub.dev/packages/sign_in_with_apple) plugin could
+be an option.
+
+### Web integration
+
+For web integration details, see the
+[`google_sign_in_web` package](https://pub.dev/packages/google_sign_in_web).
+
+## Usage
+
+### Import the package
+
+To use this plugin, follow the
+[plugin installation instructions](https://pub.dev/packages/google_sign_in/install).
+
+### Use the plugin
+
+Add the following import to your Dart code:
+
+```dart
+import 'package:google_sign_in/google_sign_in.dart';
+```
+
+Initialize GoogleSignIn with the scopes you want:
+
+```dart
+GoogleSignIn _googleSignIn = GoogleSignIn(
+  scopes: [
+    'email',
+    'https://www.googleapis.com/auth/contacts.readonly',
+  ],
+);
+```
+
+[Full list of available scopes](https://developers.google.com/identity/protocols/googlescopes).
+
+You can now use the `GoogleSignIn` class to authenticate in your Dart code, e.g.
+
+```dart
+Future<void> _handleSignIn() async {
+  try {
+    await _googleSignIn.signIn();
+  } catch (error) {
+    print(error);
+  }
+}
+```
+
+## Example
+
+Find the example wiring in the
+[Google sign-in example application](https://github.com/flutter/plugins/blob/main/packages/google_sign_in/google_sign_in/example/lib/main.dart).
